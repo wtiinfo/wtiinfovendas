@@ -1,6 +1,6 @@
 function App() {
   return (
-    <h1>Project clean</h1>
+    <h1 className="text-primary">Project clean</h1>
   );
 }
 
