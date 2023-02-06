@@ -25,9 +25,9 @@ public class SaleService {
 	@Autowired
 	private SellerRepository sellerRepo;
 	
-	@Transactional(readOnly = true) //para garantir que não fazer loking de escrita no banco
+	@Transactional(readOnly = true)
 	public Page<SaleDTO> findAll(Pageable pageable) {
-		sellerRepo.findAll();//trazendo para o cache evitando a reconsulta no banco. solucao simples, menos indicada
+		sellerRepo.findAll(); 
 		Page<Sale> result = repository.findAll(pageable);
 		return result.map(sale -> new SaleDTO(sale));
 	}
