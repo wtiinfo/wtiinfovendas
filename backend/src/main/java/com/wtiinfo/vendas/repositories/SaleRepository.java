@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.wtiinfo.vendas.dto.SaleSuccessDTO;
 import com.wtiinfo.vendas.dto.SaleSumDTO;
 import com.wtiinfo.vendas.entities.Sale;
 
@@ -15,4 +16,8 @@ public interface SaleRepository extends JpaRepository<Sale, Long>{
 	@Query("SELECT new com.wtiinfo.vendas.dto.SaleSumDTO(s.seller, SUM(s.amount)) "
 			+ "FROM Sale AS s GROUP BY s.seller")
 	List<SaleSumDTO> amountGroupedBySeller();
+	
+	@Query("SELECT new com.wtiinfo.vendas.dto.SaleSuccessDTO(s.seller, SUM(s.visited), SUM(s.deals)) "
+			+ "FROM Sale AS s GROUP BY s.seller")
+	List<SaleSuccessDTO> successGroupedBySeller();
 }
