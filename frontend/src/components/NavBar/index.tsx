@@ -1,4 +1,4 @@
-import logomarca from 'assets/img/dslogo.svg'
+import logomarca from 'assets/img/dslogo.svg';
 
 const NavBar = () => {
     return (
