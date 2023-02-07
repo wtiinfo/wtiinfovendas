@@ -1,4 +1,27 @@
+import axios from "axios";
+import { id } from "date-fns/locale";
+import { useState, useEffect } from "react";
+import { SalePage } from "types/sale";
+import { formatLocalDate } from "utils/format";
+import { BASE_URL } from "utils/requests";
+
 const DataTable = () => {
+
+    const [page, setPage] = useState<SalePage>({
+        first: true,
+        last: true,
+        number: 0,
+        totalElements: 0,
+        totalPage: 0
+    });
+
+    useEffect(() => {
+        axios.get(`${BASE_URL}/sales?page=0&size=20&sort=date,desc`)
+            .then(response => {
+                setPage(response.data);
+            });
+    }, []);
+
     return (
         <div className="table-responsive">
             <table className="table table-striped table-sm">
@@ -12,27 +35,17 @@ const DataTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>22/04/2021</td>
-                        <td>Barry Allen</td>
-                        <td>34</td>
-                        <td>25</td>
-                        <td>15017.00</td>
-                    </tr>
-                    <tr>
-                        <td>12/05/2021</td>
-                        <td>Padme</td>
-                        <td>33</td>
-                        <td>21</td>
-                        <td>11044.00</td>
-                    </tr>
-                    <tr>
-                        <td>19/12/2021</td>
-                        <td>Bruce</td>
-                        <td>21</td>
-                        <td>12</td>
-                        <td>5033.04</td>
-                    </tr>
+                    {
+                        page.content?.map(i => (
+                            <tr key={i.id}>
+                                <td>{formatLocalDate(i.date, "dd/MM/yyyy")}</td>
+                                <td>{i.seller.name}</td>
+                                <td>{i.visited}</td>
+                                <td>{i.deals}</td>
+                                <td>R$ {i.amount.toFixed(2)}</td>
+                            </tr>
+                        ))
+                    }
                 </tbody>
             </table>
         </div>
