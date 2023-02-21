@@ -50,7 +50,10 @@ const BarChart = () => {
                     ]
                 });
             });
-    }, []);
+    }, []
+
+    
+    );
 
     const options = {
         plotOptions: {
